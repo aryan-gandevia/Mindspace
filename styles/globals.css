@@ -109,3 +109,57 @@ a {
     color-scheme: dark;
   }
 }
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+li {
+  border-top: 1px solid rgb(0, 0, 0, 0.1);
+}
+
+hr { 
+  margin-top: 2px;
+  margin-bottom: 10px;
+}
+
+.menu-trigger {
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  transform: translateY(4px);
+  position: absolute;
+  background-color: white;
+  border-radius: 5px;
+  padding: 2px;
+}
+
+.dropdown-menu::before {
+  content: '';
+  position: absolute;
+  background: white;
+}
+
+.dropdown-menu ul li {
+  padding: 5px;
+}
+
+.dropdown-menu ul li:hover a {
+  color: cyan;
+  cursor: pointer;
+}
+
+.dropdown-menu.active {
+  opacity: 1;
+}
+
+.dropdown-menu.inactive {
+  opacity: 0;
+  transform: translateY(-10000%);
+}

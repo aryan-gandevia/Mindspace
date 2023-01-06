@@ -7,8 +7,8 @@ import {useEffect} from "react";
 
 export default function Login () {
 
-    const route = useRouter();
-    const [user, loading] = useAuthState(auth);
+    const route = useRouter(); // Pathing of the application (what page it goes to)
+    const [user, loading] = useAuthState(auth); // State of the user, logged in or not
 
     //Sign in with Google
     const googleProvider = new GoogleAuthProvider();
@@ -21,6 +21,7 @@ export default function Login () {
         }
     };
 
+    // if user is logged in, don't let them go back to login
     useEffect(() => {
         if (user) {
             route.push ("/");
@@ -30,6 +31,8 @@ export default function Login () {
     }, [user]);
 
     return (
+
+        /* Login button */
         <div className = "shadow-x1 mt-32 p-10 text-gray-700 bg-white rounded-lg">
             <h2 className = "text-2xl font-medium">
                 Join today
@@ -38,6 +41,8 @@ export default function Login () {
                 <h3 className = "py-4">
                     Sign in with one of the providers
                 </h3>
+
+                {/* Login with Google button */}
                 <button
                  onClick={GoogleLogin}
                  className="text-white bg-gray-700 w-full font-medium rounded-lg flex align-middle p-4 gap-2">

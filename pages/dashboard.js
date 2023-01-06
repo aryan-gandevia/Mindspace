@@ -9,9 +9,10 @@ import {AiFillEdit} from 'react-icons/ai';
 import Link from "next/link";
 
 export default function Dashboard () {
-    const route = useRouter();
-    const [user, loading] = useAuthState(auth);
-    const [posts, setPosts] = useState ([]);
+
+    const route = useRouter(); // Route of the page
+    const [user, loading] = useAuthState(auth); // The user's state
+    const [posts, setPosts] = useState ([]); // All the posts by the user
 
     // See if user is logged
     const getData = async () => {
@@ -22,6 +23,7 @@ export default function Dashboard () {
             return route.push('/');
         }
 
+        // All of user's posts
         const collectionRef = collection(db, 'posts');
         const q = query(collectionRef, where('user', '==', user.uid));
         const unsubscribe = onSnapshot(q, (snapshot => {
@@ -48,17 +50,23 @@ export default function Dashboard () {
             <h1> 
                 Your Posts
             </h1>
+
+            {/* The user's posts*/}
             <div>
                 {posts.map((post) => {
                     return (
                     <Message {...post} key={post.id}>
                         <div className = "flex gap-4">
+
+                            {/* Button to delete the post */}
                             <button 
                             onClick = {() => deletePost(post.id)}
                             className = "text-pink-600 flex items-enter justify-center gap-2 py-2 text-sm">
                                 <BsTrash2Fill className= "text-2xl"/>
                                 Delete
                             </button>
+
+                            {/* button to edit the posrt */}
                             <Link href = {{pathname: "/post", query: post}}>
                                 <button className = "text-green-400 flex items-enter justify-center gap-2 py-2 text-sm">
                                     <AiFillEdit className= "text-2xl"/>
@@ -68,8 +76,10 @@ export default function Dashboard () {
                         </div>
                     </Message>
                     );
-                })}
+                })}    
             </div>
+
+            {/* Sign out button */}
             <button className = "font-medium text-white bg-cyan-500 py-2 px-4 w-full my-6"
              onClick={ () => auth.signOut()}>
                 Sign out

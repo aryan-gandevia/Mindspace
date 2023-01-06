@@ -7,25 +7,30 @@ import { arrayUnion, Timestamp, doc, getDoc, onSnapshot, orderBy, query, updateD
 
 export default function Details () {
 
-    const router = useRouter();
-    const routeData = router.query;
-    const [message, setMessage] = useState("");
-    const [allMessage, setAllMessage] = useState([]);
+    const router = useRouter(); // Routing the user
+    const routeData = router.query; // Retrieving the selected post's data
+    const [message, setMessage] = useState(""); // The comment
+    const [allMessage, setAllMessages] = useState([]); // All the comments on the post
 
 
-    //Submit a message
+    // Submit a message
     const submitMessage = async () => {
-        //Check if user is logged
+        // Check if user is logged
         if (!auth.currentUser) {
             return router.push("/auth/login");
         }
+        
+        // Check if comment being submitted is empty
         if (!message) {
             toast.error("Your comment is empty!", {
                 autoClose: 1500
             });
             return;
         }
-        const docRef = doc(db, 'posts', routeData.id);
+
+        const docRef = doc(db, 'posts', routeData.id); // The specific post selecte
+        
+        // Holding the unit of the comment
         await updateDoc(docRef, {
             comments: arrayUnion({
                 message,
@@ -42,11 +47,12 @@ export default function Details () {
     const getComments = async () => {
         const docRef = doc(db, 'posts', routeData.id);
         const unsubscribe = onSnapshot(docRef, (snapshot) => {
-          setAllMessage(snapshot.data().comments);
+          setAllMessages(snapshot.data().comments);
         });
         return unsubscribe;
     };
 
+    // Loading the comments properly
     useEffect(() => {
         if (!router.isReady) {
             return;
@@ -56,16 +62,22 @@ export default function Details () {
 
     return (
         <div>
+
+            {/* Loads the specific message */}
             <Message {...routeData}>
             </Message>
             <div className = "my-4">
                     <div className = "flex">
+
+                        {/* Inputting the comment */}
                         <input
                         onChange = {(e) => setMessage(e.target.value)}
                         className = "bg-dark-grey w-full p-2 text-white"
                         type = "text"
                         value = {message}
                         placeholder = "Type something..." />
+
+                        {/* Submit button to submit the comment */}
                         <button 
                         onClick = {submitMessage}
                         className = "bg-cyan-500 text-white text-sm py-2 px-4">
@@ -76,6 +88,8 @@ export default function Details () {
                         <h2 className = "font-bold">
                             Comments
                         </h2>
+
+                        {/* Loading all comments */}
                         {allMessage?.map(message => (
                             <div className = "bg-black p-4 my-4 border-2 shaodw-white" key={message.time}>
                                 <div className = "flex items-center gap-2 mb-4">
