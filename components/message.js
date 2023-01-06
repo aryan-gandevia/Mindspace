@@ -1,10 +1,14 @@
-export default function Message ({children, avatar, username, description, title, tag}) {
+import Link from 'next/link';
+
+export default function Message ({children, avatar, username, description, title, tag, user}) {
     return (
         <div className = " bg-white p-8 m-4">
             <div className = "flex item-center gap-2">
 
                 {/* Picture of user */}
-                <img src = {avatar} className = "w-10 rounded-full" />
+                <Link href = {{pathname: "/user", query: {user, username}}}>
+                    <img src = {avatar} className = "w-10 rounded-full" />
+                </Link>
                 
                 {/* Username */}
                 <h2 className = "text-black">

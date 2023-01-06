@@ -28,7 +28,7 @@ export default function Details () {
             return;
         }
 
-        const docRef = doc(db, 'posts', routeData.id); // The specific post selecte
+        const docRef = doc(db, 'posts', routeData.id); // The specific post selected
         
         // Holding the unit of the comment
         await updateDoc(docRef, {

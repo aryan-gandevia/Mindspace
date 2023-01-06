@@ -71,7 +71,7 @@ export default function Home() {
           {/* Displaying all the posts */}
           {allPosts.map(post => (
             <Message key={post.id} {...post}>
-              <Link href = {{pathname: `/${post.id}`, query: {...post}}}>
+              <Link href = {{pathname: `/${post.id}`, query: post}}>
 
                 {/* Comments button */}
                 <button className = "text-black flex p-1 rounded-lg bg-cyan-500">

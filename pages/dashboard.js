@@ -14,6 +14,7 @@ export default function Dashboard () {
     const [user, loading] = useAuthState(auth); // The user's state
     const [posts, setPosts] = useState ([]); // All the posts by the user
 
+
     // See if user is logged
     const getData = async () => {
         if (loading) {
