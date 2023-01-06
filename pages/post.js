@@ -217,6 +217,16 @@ export default function Post () {
                                              <DropdownItem text = {"media news"}/>
                                         </button>
                                         </li>
+                                        <li>
+                                        <button
+                                         type = "button"
+                                         onMouseDown= {() => {
+                                            setPost({...post, tag: "other"});
+                                            setOpen(!open);
+                                         }}>
+                                             <DropdownItem text = {"other"}/>
+                                        </button>
+                                        </li>
                                     </ul>
                                 </div>
                         </div>
