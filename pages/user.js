@@ -27,9 +27,9 @@ export default function User () {
 
     return (
         <div>
-             <div className = "flex item-center gap-2 flex items-stretch">
+             <div className = "flex item-center gap-2 items-stretch">
 
-                <img src = {routeData.avatar} className = "w-12 rounded-full border-2 " />
+                <img src = {routeData.avatar} className = "w-12 rounded-full border-2" />
 
                 {/* Username */}
                 <h1 className = "text-white p-2 text-lg">

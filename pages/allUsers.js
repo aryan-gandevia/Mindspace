@@ -33,16 +33,7 @@ export default function AllUsers () {
 
     return (
         <div>
-          {allPosts.map(post => {{post.username}})}
-          
-
-
-            {/* {allPosts.map(post => (
-                <div>
-                    {post.id}
-                </div>
-            ))} */}
-
+          hi
         </div>
     );
 }
