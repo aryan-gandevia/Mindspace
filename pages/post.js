@@ -248,7 +248,7 @@ export default function Post () {
                 {/* Button to submit */}
                 <button 
                 type = "submit"
-                className = "w-full bg-cyan-600 text-white font-medium p-2 my-2 rounded-lg text-sm">
+                className = "w-full bg-cyan-600 hover:bg-cyan-500 text-white font-medium p-2 my-2 rounded-lg text-sm">
                     Submit
                 </button>
             </form>

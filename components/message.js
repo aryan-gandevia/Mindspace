@@ -1,17 +1,18 @@
 import Link from 'next/link';
 
 export default function Message ({children, avatar, username, description, title, tag, user}) {
+    
     return (
         <div className = " bg-white p-8 m-4">
             <div className = "flex item-center gap-2">
 
                 {/* Picture of user */}
-                <Link href = {{pathname: "/user", query: {user, username}}}>
-                    <img src = {avatar} className = "w-10 rounded-full" />
+                <Link href = {{pathname: "/user", query: {user, username, avatar}}}>
+                    <img src = {avatar} className = "w-10 rounded-full border-black hover:border-2" />
                 </Link>
                 
                 {/* Username */}
-                <h2 className = "text-black">
+                <h2 className = "text-black p-2">
                     {username}
                 </h2>
             </div>

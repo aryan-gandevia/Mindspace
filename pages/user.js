@@ -11,13 +11,6 @@ export default function User () {
     const routeData = router.query;
     const [allPosts, setAllPosts] = useState([]);
 
-    console.log(routeData.user);
-
-   // const user_id = routeData.map((character) => character);
-
-
-
-
 
     const getPosts = async () => {
         const collectionRef = collection(db, 'posts');
@@ -34,9 +27,16 @@ export default function User () {
 
     return (
         <div>
-            <h1 >
-                {routeData.username}'s posts:
-            </h1>
+             <div className = "flex item-center gap-2 flex items-stretch">
+
+                <img src = {routeData.avatar} className = "w-12 rounded-full border-2 " />
+
+                {/* Username */}
+                <h1 className = "text-white p-2 text-lg">
+                    {routeData.username}'s posts:
+                </h1>
+            </div>
+            
             {allPosts.map(post => (
                 <Message key = {post.id} {...post}>
                      <Link href = {{pathname: `/${post.id}`, query: {...post}}}>

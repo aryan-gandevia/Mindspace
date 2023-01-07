@@ -48,8 +48,8 @@ export default function Dashboard () {
 
     return (
         <div>
-            <h1> 
-                Your Posts
+            <h1 className = "text-lg"> 
+                Collection of Your Posts:
             </h1>
 
             {/* The user's posts*/}
@@ -62,14 +62,14 @@ export default function Dashboard () {
                             {/* Button to delete the post */}
                             <button 
                             onClick = {() => deletePost(post.id)}
-                            className = "text-pink-600 flex items-enter justify-center gap-2 py-2 text-sm">
+                            className = "text-pink-600 hover:bg-gray-200 flex items-enter justify-center gap-2 py-2 px-2 text-sm">
                                 <BsTrash2Fill className= "text-2xl"/>
                                 Delete
                             </button>
 
                             {/* button to edit the posrt */}
                             <Link href = {{pathname: "/post", query: post}}>
-                                <button className = "text-green-400 flex items-enter justify-center gap-2 py-2 text-sm">
+                                <button className = "text-green-400 hover:bg-gray-200 flex items-enter justify-center gap-2 py-2 px-2 text-sm">
                                     <AiFillEdit className= "text-2xl"/>
                                     Edit
                                 </button>
@@ -81,7 +81,7 @@ export default function Dashboard () {
             </div>
 
             {/* Sign out button */}
-            <button className = "font-medium text-white bg-cyan-500 py-2 px-4 w-full my-6"
+            <button className = "font-medium text-white bg-cyan-700 hover:bg-cyan-500 py-2 px-4 w-full my-6"
              onClick={ () => auth.signOut()}>
                 Sign out
             </button>

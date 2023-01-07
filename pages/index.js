@@ -55,7 +55,7 @@ export default function Home() {
       <div>
         
         {/* Top part of the page */}
-        <div className = "my-12 text-lg font-medium">
+        <div className = "text-lg font-medium">
           <h2>
             See what's on other people's minds!
             <hr></hr>
@@ -65,16 +65,16 @@ export default function Home() {
           <input  //search bar
               type = "text"
               className="w-full flex justify-center"
-              placeholder="Search for a specific tag..."
+              placeholder="Search for a specific tag fully..."
               onChange = {e => setValue(e.target.value)} />
   
           {/* Displaying all the posts */}
           {allPosts.map(post => (
             <Message key={post.id} {...post}>
-              <Link href = {{pathname: `/${post.id}`, query: post}}>
+              <Link href = {{pathname: `/${post.id}`, query: {...post}}}>
 
-                {/* Comments button */}
-                <button className = "text-black flex p-1 rounded-lg bg-cyan-500">
+                {/* Comments button*/}
+                <button className = "text-black flex p-1 rounded-lg px-3 bg-gray-200 hover:bg-gray-400">
                   {post.comments?.length > 0 ? post.comments?.length : 0} Comments
                 </button>
               </Link>
