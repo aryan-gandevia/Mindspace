@@ -14,7 +14,7 @@ export default function Nav () {
             
             {/* Link to click to go to the main page */}
             <Link href = "/">
-                <button className = "text-lg font-medium py-2 px-4 hover:bg-gray-700 bg-opacity-25">
+                <button className = "text-lg font-medium py-2 px-0 hover:bg-gray-700 bg-opacity-25">
                     Mindspace
                  </button>
             </Link>
