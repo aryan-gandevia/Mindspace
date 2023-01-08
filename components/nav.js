@@ -35,12 +35,6 @@ export default function Nav () {
                 {user && (
                     <div className = "flex items-center gap-6">
                         
-                        {/* All users button*/}
-                        {/* <Link href = "/allUsers">
-                            <button className = "font-medium bg-cyan-700 hover:bg-cyan-500 text-white py-2 px-4 rounded-mg text-sm"> 
-                                All Users
-                            </button>
-                        </Link> */}
 
                         {/* Post button*/}
                         <Link href = "/post">
