@@ -1,3 +1,4 @@
+import React from "react";
 import Message from "../components/message";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
@@ -47,7 +48,10 @@ export default function Details () {
     const getComments = async () => {
         const docRef = doc(db, 'posts', routeData.id);
         const unsubscribe = onSnapshot(docRef, (snapshot) => {
-          setAllMessages(snapshot.data().comments);
+            if (snapshot.data().comments === 'undefined') {
+
+            }
+            setAllMessages(snapshot.data().comments);
         });
         return unsubscribe;
     };
