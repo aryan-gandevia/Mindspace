@@ -3,16 +3,18 @@ import {auth} from "../utils/firebase";
 import {useAuthState} from "react-firebase-hooks/auth";
 import { useState } from "react";
 
+// The function that creates the navbar present in each page of the application. 
+// Dynamic navbar to change depending on whether or not the user is logged in or not.
 export default function Nav () {
 
-    // the user an authorized state to either show a logged in navbar or non-logged in
+    // the user and their authorized state to either show a logged in navbar or non-logged in
     const [user, loading] = useAuthState(auth); 
 
    // contents of navbar
     return (
         <nav className = "flex justify-between items-center py-3">
             
-            {/* Link to click to go to the main page */}
+            {/* Button to click to go to the main page */}
             <Link href = "/">
                 <button className = "text-lg font-medium py-2 px-0 hover:bg-gray-700 bg-opacity-25">
                     Mindspace
@@ -31,7 +33,7 @@ export default function Nav () {
                     </Link>
                 )}
 
-                {/* If the user is logged in, display the "post" button and user's profile picture*/}
+                {/* If the user is logged in, display the "post" button and user's profile picture to go to the dashboard*/}
                 {user && (
                     <div className = "flex items-center gap-6">
                         

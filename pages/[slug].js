@@ -6,22 +6,23 @@ import { auth, db } from "../utils/firebase";
 import {toast} from "react-toastify";
 import { arrayUnion, Timestamp, doc, getDoc, onSnapshot, orderBy, query, updateDoc } from "firebase/firestore";
 
+// The function that is used for comments.
 export default function Details () {
 
     const router = useRouter(); // Routing the user
-    const routeData = router.query; // Retrieving the selected post's data
+    const routeData = router.query; // Retrieving the selected post's data when comments button is pressed
     const [message, setMessage] = useState(""); // The comment
     const [allMessage, setAllMessages] = useState([]); // All the comments on the post
 
 
     // Submit a message
     const submitMessage = async () => {
-        // Check if user is logged
+        // Check if user is logged in. If not, route the user to the login page.
         if (!auth.currentUser) {
             return router.push("/auth/login");
         }
         
-        // Check if comment being submitted is empty
+        // Check if comment being submitted is empty. If it is empty, show a toast error with what the error is, and stay on the page.
         if (!message) {
             toast.error("Your comment is empty!", {
                 autoClose: 1500
@@ -29,10 +30,11 @@ export default function Details () {
             return;
         }
 
-        const docRef = doc(db, 'posts', routeData.id); // The specific post selected
+        const docRef = doc(db, 'posts', routeData.id); // The specific post selected, with the post and the docRef identifier as the post's id
         
-        // Holding the unit of the comment
+        // adds a new field to the post in the database, which is the field 'comments'
         await updateDoc(docRef, {
+            // in the field comments, hold the comments typed, the avatar of who sent it, the username, and the time the comment was made.
             comments: arrayUnion({
                 message,
                 avatar: auth.currentUser.photoURL,
@@ -41,28 +43,37 @@ export default function Details () {
             }),
         });
 
-        setMessage('');
+        setMessage(''); // start off the message as nothing.
     };
 
-    //Get Comments
-    const getComments = async () => {
-        const docRef = doc(db, 'posts', routeData.id);
-        const unsubscribe = onSnapshot(docRef, (snapshot) => {
-            if (snapshot.data().comments === 'undefined') {
 
-            }
-            setAllMessages(snapshot.data().comments);
-        });
-        return unsubscribe;
+    //Loads the comments of the specific post, in chronological order.
+    const getComments = async () => {
+        // try-catch structure because if the user tries manually typing in a random pathway for the url, then this function will be called as
+        // it is the slug component, and if the pathway isn't valid, then an error will be thrown because docRef will index through something with no value.
+        // As such, if the error is caught, we return the user to the home page, so that this error cannot come up and path the user to an unintended screen.
+        try {
+            const docRef = doc(db, 'posts', routeData.id); 
+            const update = onSnapshot(docRef, (snapshot) => { // uses onSnapshot to live update when comments are added
+                if (snapshot.data().comments === 'undefined') { 
+                }
+                setAllMessages(snapshot.data().comments);
+            });
+            return update;
+        }
+        catch {
+            return router.push("/"); // return to home
+        }
     };
 
     // Loading the comments properly
     useEffect(() => {
-        if (!router.isReady) {
+        if (!router.isReady) { // if the route isn't ready, do nothing yet
             return;
         }
-        getComments();
-    }, [router.isReady]);
+        getComments(); // fetch the comments to display
+    }, [router.isReady] // dependency to stop it from continuously looping
+    );
 
     return (
         <div>
@@ -84,7 +95,7 @@ export default function Details () {
                         {/* Submit button to submit the comment */}
                         <button 
                         onClick = {submitMessage}
-                        className = "bg-cyan-500 text-white text-sm py-2 px-4">
+                        className = "bg-cyan-700 hover:bg-cyan-500 text-white text-sm py-2 px-4">
                             Submit
                         </button>
                     </div>

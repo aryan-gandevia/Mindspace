@@ -9,10 +9,11 @@ import {BsTrash2Fill} from 'react-icons/bs';
 import {AiFillEdit} from 'react-icons/ai';
 import Link from "next/link";
 
+// The function that displays the "your account" page of the website, accessed by clicking on the avatar on the top right of the screen.
 export default function Dashboard () {
 
     const route = useRouter(); // Route of the page
-    const [user, loading] = useAuthState(auth); // The user's state
+    const [user, loading] = useAuthState(auth); // The user and their loading state
     const [posts, setPosts] = useState ([]); // All the posts by the user
 
 
@@ -26,22 +27,22 @@ export default function Dashboard () {
         }
 
         // All of user's posts
-        const collectionRef = collection(db, 'posts');
-        const q = query(collectionRef, where('user', '==', user.uid));
-        const unsubscribe = onSnapshot(q, (snapshot => {
+        const collectionRef = collection(db, 'posts'); // the database of posts
+        const q = query(collectionRef, where('user', '==', user.uid)); // only holding the posts with the userid being the same as this user (their own posts)
+        const update = onSnapshot(q, (snapshot => { // update the posts in live time with onSnapshot()
             setPosts(snapshot.docs.map((doc) => ({...doc.data(), id: doc.id})));
         }));
-        return unsubscribe;
+        return update;
     };
 
 
     //Delete post
     const deletePost = async(id) => {
-        const docRef = doc(db, 'posts', id);
-        await deleteDoc(docRef);
+        const docRef = doc(db, 'posts', id); // selects the post to delete
+        await deleteDoc(docRef); // uses in-built delete function
     }
 
-    // Get users data
+    // Get users data, and only runs once in the beginning of the page's launch, and if any state changes in the dependency
     useEffect(() => {
         getData();
 
@@ -49,6 +50,8 @@ export default function Dashboard () {
 
     return (
         <div>
+
+            {/* The heading of the page */}
             <h1 className = "text-lg"> 
                 Collection of Your Posts:
             </h1>
@@ -68,7 +71,7 @@ export default function Dashboard () {
                                 Delete
                             </button>
 
-                            {/* button to edit the posrt */}
+                            {/* button to edit the post */}
                             <Link href = {{pathname: "/post", query: post}}>
                                 <button className = "text-green-400 hover:bg-gray-200 flex items-enter justify-center gap-2 py-2 px-2 text-sm">
                                     <AiFillEdit className= "text-2xl"/>

@@ -6,26 +6,26 @@ import { db } from '../utils/firebase';
 import { collection, doc, onSnapshot, orderBy, query, where } from 'firebase/firestore';
 import Link from 'next/link';
 
-
+// The function which serves as the home page of the application
 export default function Home() {
 
 
-  const [value, setValue] = useState(""); // Value of what is being searched
+  const [value, setValue] = useState(""); // Value of what is being searched in the searchbar
 
   //Creating a state with all parts
   const [allPosts, setAllPosts] = useState([]); // All of the posts
 
-  // If nothing is being searched
+  // If nothing is being searched in the searchbar, display all posts
   if (value.length == 0) {
 
     // Gets all the posts
     const getPosts = async () => {
         const collectionRef = collection(db, 'posts');
         const q = query(collectionRef, orderBy('timestamp', 'desc'));
-        const unsubscribe = onSnapshot(q, (snapshot) => {
+        const update = onSnapshot(q, (snapshot) => {
           setAllPosts(snapshot.docs.map((doc) => ({...doc.data(), id: doc.id})));
         });
-        return unsubscribe;
+        return update;
     };
   
     useEffect(() => {
@@ -33,22 +33,23 @@ export default function Home() {
     });
   } 
 
-  // If something is being searched, only display the posts with the searched tag 
+  // If something is being searched, only display the posts with the exact searched tag 
   if (value.length > 0) {
 
     // Gets all the posts
     const getPosts = async () => {
         const collectionRef = collection(db, 'posts');
         const q = query(collectionRef, where('tag', '==', value));
-        const unsubscribe = onSnapshot(q, (snapshot) => {
+        const update = onSnapshot(q, (snapshot) => {
           setAllPosts(snapshot.docs.map((doc) => ({...doc.data(), id: doc.id})));
         });
-        return unsubscribe;
+        return update;
       };
       
-    useEffect(() => {
-      getPosts();
-    });
+    useEffect(() => { // useEffect function that runs only when the value function is changed (something is typed in the searchbar). By adding this dependency,
+                      // the function does not continuously run without a dependency, and only reruns when neccessary.
+      getPosts(); // calls getPosts() function
+    }, [value]);
   }
 
     return (

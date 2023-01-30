@@ -1,5 +1,6 @@
 import { Html, Head, Main, NextScript } from 'next/document'
 
+// The function that loads things needed for the applicaiton. In this case, it is the font that is used throughout the application.
 export default function Document() {
   return (
     <Html>

@@ -1,5 +1,8 @@
 import Link from 'next/link';
 
+// The function that is used to format the messages/posts which are displayed on the screen.
+// The messages include the user's avatar, username, post description, title, its associated search tag
+// and the user itself incase the user information is needed to be sent.
 export default function Message ({children, avatar, username, description, title, tag, user}) {
     
     return (
@@ -24,7 +27,7 @@ export default function Message ({children, avatar, username, description, title
                 </p>
             </div>
 
-            {/* Tag */}
+            {/* Search tag */}
             <div>
                 <p className = "text-sm text-green-400">
                     {tag}

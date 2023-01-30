@@ -7,19 +7,20 @@ import {toast} from "react-toastify";
 import {IoMdArrowDropdown} from "react-icons/io";
 
 
-// Function for the dropdown menu
+// Function for the dropdown menu in the post function
 function DropdownItem (props) {
     return (
          <a className = "text-black"> {props.text}</a>        
     );
 }
 
+// The function that serves as the 'post' screen
 export default function Post () {
 
-    // Whether the dropdown menu is open or not
+    // Whether the dropdown menu is open or not, default false/unopened
     const [open, setOpen] = useState(false); 
 
-    // form state
+    // form state, all values defualted as empty string
     const [post, setPost] = useState({description: "", title: "", tag: ""});
 
     // the user
@@ -38,7 +39,7 @@ export default function Post () {
 
 
 
-        //Run checks on post for validity:
+        //Run checks on potential post's validity:
 
         //Title validity
         if (!post.title) {
@@ -78,7 +79,7 @@ export default function Post () {
 
             // Make a new post
             const collectionRef = collection(db, 'posts');
-            await addDoc(collectionRef, {
+            await addDoc(collectionRef, { // on top of all the information given for the post, also add the userid, avatar and username.
                 ...post,
                 timestamp: serverTimestamp(),
                 user: user.uid,
@@ -87,11 +88,12 @@ export default function Post () {
             });
             setPost({ description: "", title: "", tag: ""});
             toast.success("A new post has been made!", {autoClose: 2000} );
-            return route.push('/');
+            return route.push('/'); // back to home page once post is made
         }
     };
 
-    //Check our user
+    //Check our user's state or where they are coming from. If editing a post, Bring information from this post to the edit section so the post can edit
+    // existing information.
     const checkUser = async () => {
         if (loading) {
             return;
@@ -104,7 +106,7 @@ export default function Post () {
         }
     };
 
-    useEffect (() => {
+    useEffect (() => { // load the page once and check if the user is editing a post or making a new one (as done in checkUser() function)
         checkUser();
     }, [user, loading]);
 
