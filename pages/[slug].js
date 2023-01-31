@@ -47,23 +47,23 @@ export default function Details () {
     };
 
 
-    //Loads the comments of the specific post, in chronological order.
+    //Loads the comments of the specific post, in chronological order. Also checks if this is a valid route by the user or invalid.
     const getComments = async () => {
-        // try-catch structure because if the user tries manually typing in a random pathway for the url, then this function will be called as
-        // it is the slug component, and if the pathway isn't valid, then an error will be thrown because docRef will index through something with no value.
-        // As such, if the error is caught, we return the user to the home page, so that this error cannot come up and path the user to an unintended screen.
-        try {
-            const docRef = doc(db, 'posts', routeData.id); 
-            const update = onSnapshot(docRef, (snapshot) => { // uses onSnapshot to live update when comments are added
-                if (snapshot.data().comments === 'undefined') { 
-                }
-                setAllMessages(snapshot.data().comments);
-            });
-            return update;
+        // if statements so that if the user tries manually entering some sort of random extension to the URL, it returns them back to the home screen instead of a random,
+        // undefined slug
+        if (routeData.id === undefined) {
+            return router.push("/");
         }
-        catch {
-            return router.push("/"); // return to home
-        }
+        console.log(router.pathname);
+        const docRef = doc(db, 'posts', routeData.id);
+        const update = onSnapshot(docRef, (snapshot) => { // uses onSnapshot to live update when comments are added
+            console.log(snapshot.data().comments);
+            if (snapshot.data().comments === undefined) { 
+            }
+            setAllMessages(snapshot.data().comments);
+        });
+        return update;
+
     };
 
     // Loading the comments properly

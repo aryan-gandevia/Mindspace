@@ -48,21 +48,28 @@ export default function Post () {
             });
             return route.push("/post");
         }
-        if (post.title.length > 50) {
+        else if (post.title.length > 50) {
             toast.error ("Your title is too long!", {
                 autoClose: 2000
             });
             return route.push("/post");
         }
 
+        else if (!post.tag) {
+            toast.error ("You must select a tag!", {
+                autoClose: 2000
+            });
+            return route.push("/post");
+        }
+
         //Description validity
-        if (!post.description) {
+       else if (!post.description) {
             toast.error("Your post is empty!", {
                 autoClose: 2000 
             });
             return route.push("/post");
         }
-        if (post.description.length > 300) {
+        else if (post.description.length > 300) {
             toast.error("Your post is too long!", {
                 autoClose: 2000 
             });
@@ -142,13 +149,13 @@ export default function Post () {
                             <div 
                             className = "menu-trigger border-2 w-full" onClick = {() => {setOpen(!open)}}>
                                 {post.tag.length == 0 && (
-                                    <h7>
+                                    <>
                                         Click here:
-                                    </h7>
+                                    </>
                                 )}
-                                <h7 className = "text-green-400">
+                                <h2 className = "text-green-400">
                                     {post.tag}
-                                </h7>
+                                </h2>
                             </div>
                                     
                                 {/* All the options of the potential tags */}

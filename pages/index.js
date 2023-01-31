@@ -49,7 +49,7 @@ export default function Home() {
     useEffect(() => { // useEffect function that runs only when the value function is changed (something is typed in the searchbar). By adding this dependency,
                       // the function does not continuously run without a dependency, and only reruns when neccessary.
       getPosts(); // calls getPosts() function
-    }, [value]);
+    },);
   }
 
     return (
